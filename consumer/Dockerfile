@@ -2,8 +2,15 @@ FROM openjdk:17-jdk-alpine
 
 WORKDIR /app
 
-# Копирование JAR-файла в контейнер
-COPY consumer/build/libs/consumer-0.0.1-SNAPSHOT.jar consumer.jar
+COPY consumer/gradlew .
+COPY consumer/gradle/wrapper gradle/wrapper
+COPY consumer/build.gradle .
+COPY consumer/settings.gradle .
+COPY consumer/src src
 
-# Команда для запуска JAR-файла
-CMD ["java", "-jar", "consumer.jar"]
+RUN chmod +x gradlew
+# Делаем gradlew исполняемым и запускаем сборку
+RUN ./gradlew build --no-daemon
+
+# Команда для запуска
+CMD ["java", "-jar", "/app/build/libs/consumer-0.0.1-SNAPSHOT.jar"]

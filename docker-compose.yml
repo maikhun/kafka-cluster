@@ -9,7 +9,7 @@ services:
       - 22181:2181
 
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.4.3
     depends_on:
       - zookeeper
     ports:
@@ -24,7 +24,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
 
   kafka2:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.4.3
     depends_on:
       - zookeeper
     ports:
@@ -55,7 +55,6 @@ services:
 
   producer:
     build:
-      context: .
       dockerfile: producer/Dockerfile
     ports:
       - 8080:8080
@@ -64,7 +63,6 @@ services:
 
   consumer:
     build:
-      context: .
       dockerfile: consumer/Dockerfile
     ports:
       - 8081:8080
